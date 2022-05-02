@@ -1,0 +1,101 @@
+# beyondOne
+NATS and Go working together
+2 May 2022
+Summary: What if you could have request/reply, event processing and persistence delivered as one executable binary? And that executable can be built to target all `Go` targets!
+
+Loh Siu Yin
+Software Engineer, Beyond Broadcast LLP
+siuyin@beyondbroadcast.com
+
+## Inspiration
+BusyBox
+```
+$ docker run --rm busybox:1.27 sh -c 'ls  /bin'
+
+[                
+[[       
+acpid        
+add-shell 
+addgroup 
+adduser     
+adjtimex 
+ar
+
+ ...
+
+whoami
+whois
+xargs
+xxd
+xz
+xzcat
+yes
+zcat
+zcip
+```
+
+## What if:
+You could have request/reply, event processing and persistence,  
+delivered as one executable binary? 
+
+And that executable can be built to target all `Go` targets!
+```
+$ go tool dist list
+android/amd64
+android/arm
+android/arm64
+darwin/amd64
+darwin/arm64
+ ...
+ios/amd64
+ios/arm64
+js/wasm
+linux/386
+linux/amd64
+linux/arm
+linux/arm64
+ ...
+windows/386
+windows/amd64
+windows/arm
+windows/arm64
+```
+
+## You can! Let me show you ..
+
+## The process
+1. Embed NATS: https://pkg.go.dev/github.com/nats-io/nats-server/v2/server#Server .
+1. Write your goroutines.
+1. Build: `GOOS=linux GOARCH=amd64 go build` 
+
+
+## Example: Request / Reply 
+.code cmd/request-reply/main.go /func main\(/,/^}/
+
+## Embed the NATS server
+.code cmd/request-reply/main.go /func embedNATS\(/,/^}/
+
+## connectSvr
+.code cmd/request-reply/main.go /var \(/,/^\)/
+.code cmd/request-reply/main.go /func connectSvr\(/,/^}/
+.code cmd/request-reply/main.go /func waitForSvrRdy\(/,/^}/
+
+## Let's ping our embedded NATS Server!
+
+Start our embedded NATS server:
+
+---
+
+
+```
+go run cmd/request-reply/main.go
+```
+
+Ping the server using the `nats` command line utility:  
+Get `natscli` from: `https://github.com/nats-io/natscli/releases`
+
+---
+
+```
+nats publish hello world
+```
