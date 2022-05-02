@@ -1,4 +1,4 @@
-# beyondOne
+# beyondOne™
 NATS and Go working beautifully together
 2 May 2022
 Summary: What if you could have request/reply, event processing and persistence delivered as one executable binary? And that executable can be built to target all `Go` targets!
@@ -61,9 +61,9 @@ windows/arm
 windows/arm64
 ```
 
-## You can, with beyondOne! Let me show you ..
+## You can, with beyondOne™ ! Let me show you ..
 
-## The process
+## The beyondOne™  process
 1. Embed NATS:  
 `https://pkg.go.dev/github.com/nats-io/nats-server/v2/server#Server`
 1. Write your goroutines.
@@ -262,4 +262,6 @@ If needed, issue the `start` argument to seed the stream.
 `go run cmd/event/*.go`
 
 
+## Code and presentation download
 
+`https://github.com/siuyin/beyondone`
