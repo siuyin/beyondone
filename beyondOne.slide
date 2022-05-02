@@ -234,5 +234,32 @@ Now let's seed the event stream..
 
 ---
 
+Clean up command, when needed:  
 `nats stream rm wedding`
+
+## Execute our wedding preparations
+.code cmd/evstream/main.go /func procEvtStream\(/,/^}/
+
+## Checking for an event stream
+I do this check to see if a stream is present.
+
+If not, I skip event processing.
+
+.code cmd/evstream/main.go /func weddingStreamPresent\(/,/^}/
+
+## This is how fetch works..
+.code cmd/evstream/main.go /func fetch\(/,/^}/
+
+## Let's see the wedding planner at work
+
+Remember to uncomment procEvtStream in `main` to enable processing.
+.code cmd/evstream/main.go /func main\(/,/^}/
+
+---
+
+If needed, issue the `start` argument to seed the stream.
+
+`go run cmd/event/*.go`
+
+
 
