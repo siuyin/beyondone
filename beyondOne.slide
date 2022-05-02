@@ -1,5 +1,5 @@
 # beyondOne
-NATS and Go working together
+NATS and Go working beautifully together
 2 May 2022
 Summary: What if you could have request/reply, event processing and persistence delivered as one executable binary? And that executable can be built to target all `Go` targets!
 
@@ -61,15 +61,17 @@ windows/arm
 windows/arm64
 ```
 
-## You can! Let me show you ..
+## You can, with beyondOne! Let me show you ..
 
 ## The process
-1. Embed NATS: https://pkg.go.dev/github.com/nats-io/nats-server/v2/server#Server .
+1. Embed NATS:  
+`https://pkg.go.dev/github.com/nats-io/nats-server/v2/server#Server`
 1. Write your goroutines.
-1. Build: `GOOS=linux GOARCH=amd64 go build` 
+1. Build:  
+`GOOS=linux GOARCH=amd64 go build`
 
 
-## Example: Request / Reply 
+## Embedding NATS with a Request / Reply example
 .code cmd/request-reply/main.go /func main\(/,/^}/
 
 ## Embed the NATS server
@@ -82,13 +84,15 @@ windows/arm64
 
 ## Let's ping our embedded NATS Server!
 
-Start our embedded NATS server:
+Build and start our embedded NATS server:
 
 ---
 
 
 ```
-go run cmd/request-reply/main.go
+GOOS=linux GOARCH=amd64 go build -o /tmp/mysvr cmd/request-reply/main.go
+
+/tmp/mysvr
 ```
 
 Ping the server using the `nats` command line utility:  
@@ -99,3 +103,82 @@ Get `natscli` from: `https://github.com/nats-io/natscli/releases`
 ```
 nats publish hello world
 ```
+
+## Let's write a math.sum service
+Instead of `http` transport and `json` encoding,  
+let's use `nats` transport and `plain text` encoding.
+
+.code cmd/request-reply/main.go /func mathSvcStart\(/,/^\}/
+
+.code cmd/request-reply/main.go /func replyWithSum\(/,/^\}/
+
+
+## Try it out ..
+Start our embedded NATS server:
+
+---
+
+
+```
+go run cmd/request-reply/main.go
+```
+
+Make some requests to math.sum:
+
+---
+
+```
+nats request math.sum 2,3
+
+nats request math.sum 2,3,4
+
+nats request math.sum 2a,3
+```
+
+## A math.sum service requestor
+.code cmd/request-reply/main.go /func requestMathSvc\(/,/^\}/
+
+## Exercising the requestor
+Start our embedded NATS server:
+
+---
+
+
+```
+go run cmd/request-reply/main.go
+```
+
+And type in the values..
+
+
+## Wait, there is more! How would you like a key-value store?
+
+## Get a key-value store for free
+
+First, let's start our embedded NATS server.
+
+`go run cmd/request-request/main.go`
+
+---
+
+```
+nats kv --help
+```
+
+---
+
+```
+nats kv add mykv
+nats kv ls
+
+nats kv put mykv a apple
+nats kv get mykv a
+
+nats kv put mykv n 123
+nats kv get mykv n
+
+nats kv put mykv pi 3.14
+nats kv get mykv pi
+```
+
+And of course the above operations can be done with `Go` code as well.
