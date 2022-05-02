@@ -151,7 +151,7 @@ go run cmd/request-reply/main.go
 And type in the values..
 
 
-## Wait, there is more! How would you like a key-value store?
+## Wait, there is more! Would you like a key-value store for free?
 
 ## Get a key-value store for free
 
@@ -182,3 +182,57 @@ nats kv get mykv pi
 ```
 
 And of course the above operations can be done with `Go` code as well.
+
+## Some programs run fast, others run slower..
+
+## Temporal decoupling with event streaming
+Imagine you have a shopping list for a wedding.  
+Eg. hire photographer, book restaurant ... etc.
+
+Producing the list takes a relatively short amount of time.
+
+Doing, executing, the items on that list takes a much longer time.
+
+Say you ask a computer program to run the wedding preparations:  
+What happens if that program was interrupted?
+
+Would it start again from the beginning?  
+What would it take for it to remember its place?
+
+## The wedding preparations list..
+.code cmd/evstream/main.go /var lst/,/^}/
+
+## Event Stream initialisation
+.code cmd/evstream/main.go /func main\(/,/^}/
+.code cmd/evstream/main.go /func defineEventStream\(/,/^}/
+
+## Don't initialise every time the program is run
+.code cmd/evstream/main.go /func initStream\(/,/^}/
+
+## Here is how you add a stream
+.code cmd/evstream/main.go /func addStream\(/,/^}/
+
+And seed the stream with events..
+
+.code cmd/evstream/main.go /func feedEvents\(/,/^}/
+
+## Let's inspect our event stream.
+
+First run our beyondOne application:  
+`go run cmd/evstream/*.go`
+
+
+Now lets see if we have any streams defined:  
+`nats stream list`
+
+---
+
+Now let's seed the event stream..  
+`go run cmd/evstream/*.go start`
+
+`nats stream view wedding 3`
+
+---
+
+`nats stream rm wedding`
+
