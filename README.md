@@ -1,5 +1,5 @@
-# beyond One
-beyond One is a new way of delivery computing capabilities.
+# beyondOne™
+beyondOne™ is a new way of delivery computing capabilities.
 
 What if you could have request/reply, event processing and persistence delivered as one executable binary?  
 And that executable can be built for all `Go` targets!
