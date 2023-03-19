@@ -23,7 +23,9 @@ func main() {
 }
 
 func embedNATS() {
-	s, err := svr.NewServer(&svr.Options{Port: 4222, JetStream: true})
+	//sa := svr.NewAccount("sys")
+	//s, err := svr.NewServer(&svr.Options{Port: 4222, JetStream: true, SystemAccount: "sys", Accounts: []*svr.Account{sa}})
+	s, err := svr.NewServer(&svr.Options{JetStream: true})
 	if err != nil {
 		log.Fatal(err)
 	}

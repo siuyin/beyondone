@@ -157,11 +157,13 @@ And type in the values..
 
 First, let's start our embedded NATS server.
 
-`go run cmd/request-request/main.go`
+`go run cmd/request-reply/main.go`
 
 ---
 
 ```
+export NATS_URL=nats://localhost:4222
+
 nats kv --help
 ```
 
@@ -183,6 +185,21 @@ nats kv get mykv pi
 
 And of course the above operations can be done with `Go` code as well.
 
+## And a free object store
+
+The NATS key-value store has a maximum value payload size of about 1 MB.
+
+When jetstream is enabled, you also get an object store that has payload
+sizes limited only by disk space.
+
+---
+
+```
+go run cmd/request-reply/main.go
+export NATS_URL=nats://localhost:4222
+
+nats obj --help
+```
 ## Some programs run fast, others run slower..
 
 ## Temporal decoupling with event streaming
